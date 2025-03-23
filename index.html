@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MealMate Single Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* Reset + base typography */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Utility classes for sections */
+    .section {
+      padding: 30px 20px; /* reduced spacing */
+    }
+    /* Remove extra space between consecutive sections */
+    .section + .section {
+      margin-top: 0;
+    }
+
+    /* ========== 1) HERO (Background Video) ========== */
+    .hero {
+      position: relative;
+      height: 80vh;
+      min-height: 480px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-iframe-wrapper {
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .hero-iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3; /* above overlay */
+      max-width: 700px;
+      margin: 0 20px;
+    }
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+    .hero h2 {
+      font-size: 2em;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .hero .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #0fc9a7;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    .hero .btn:hover {
+      background-color: #18e0bd;
+    }
+
+    /* ========== 2) INGREDIENT FINDER ========== */
+    .finder-section {
+      background: #fafafa;
+    }
+    .finder-container {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .finder-container h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .finder-container p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .finder-container label {
+      display: block;
+      text-align: left;
+      margin: 12px 0 6px;
+      font-weight: bold;
+    }
+    .finder-container input[type="text"] {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .finder-container button {
+      background-color: #47c9a2;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .finder-container button:hover {
+      background-color: #5ce2b6;
+    }
+    .ingredient-finder-results {
+      margin-top: 25px;
+    }
+    .ingredient-finder-results h3 {
+      margin-bottom: 10px;
+    }
+    .ingredient-finder-results li {
+      background: #fff;
+      border: 1px solid #ddd;
+      list-style: none;
+      margin: 12px auto;
+      padding: 15px;
+      max-width: 500px;
+      border-radius: 6px;
+      text-align: left;
+    }
+
+    /* ========== 3) POPULAR RECIPES ========== */
+    .popular-recipes-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+    }
+    .video-wrap {
+      flex: 1 1 600px;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .popular-text {
+      flex: 1 1 400px;
+      min-width: 280px;
+    }
+    .popular-text h1 {
+      margin-bottom: 15px;
+      font-size: 2em;
+    }
+    .popular-text p {
+      margin-bottom: 15px;
+      color: #555;
+      line-height: 1.6;
+    }
+    .popular-text .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #47c9a2;
+      color: #fff;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    .popular-text .btn:hover {
+      background-color: #5ce2b6;
+    }
+
+    /* ========== 4) LATEST RECIPES ========== */
+    .latest-recipes {
+      background-color: #f7f7f7;
+    }
+    .latest-recipes .section-head {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .cards-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .card-item {
+      flex: 0 1 calc(300px);
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .card-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .card-item img {
+      width: 100%;
+      display: block;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h5 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1.2em;
+    }
+    .card-content p {
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .card-content .btn {
+      background-color: #47c9a2;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .card-content .btn:hover {
+      background-color: #5ce2b6;
+    }
+
+    /* ========== 5) JOIN US FORM ========== */
+    .join-us {
+      background: #fafafa;
+    }
+    .join-us .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .join-us .form-container h3 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .join-us .form-container p {
+      margin-bottom: 25px;
+      color: #555;
+    }
+    .join-us form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .join-us input[type="text"],
+    .join-us input[type="email"],
+    .join-us input[type="url"],
+    .join-us textarea {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .join-us textarea {
+      min-height: 90px;
+    }
+    .join-us .submit-btn {
+      background-color: #47c9a2;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 5px;
+    }
+    .join-us .submit-btn:hover {
+      background-color: #5ce2b6;
+    }
+
+    /* ========== 6) CONTACT SECTION ========== */
+    .contact-section {
+      background-color: #fff;
+    }
+    .contact-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-container h3 {
+      font-size: 2em;
+      margin-bottom: 25px;
+    }
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .contact-item {
+      flex: 0 1 calc(250px);
+      background-color: #fefefe;
+      border-radius: 6px;
+      box-shadow: 0 0 3px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .contact-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .contact-item h6 {
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    .contact-item p {
+      margin-bottom: 0;
+      color: #555;
+    }
+    .contact-item a {
+      color: #333;
+      text-decoration: none;
+    }
+    /* reduce spacing at bottom */
+    .contact-section {
+      padding-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1) HERO (Background Video) ========== -->
+<section class="hero">
+  <div class="hero-iframe-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/Re9pB8A_SiA?list=PLpfv1AIjenVMmT7iRx6Nwu6uG6A9gSD0j&autoplay=1&mute=1&loop=1&playsinline=1&controls=0&showinfo=0&autohide=1&allowfullscreen=true&mode=transparent"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>MealMate</h1>
+    <h2>The Easiest Way to Cook Together &amp; Waste Less</h2>
+    <p>Share recipes, plan meals, and reduce food waste with friends!</p>
+    <a class="btn" href="https://www.youtube.com/watch?v=Re9pB8A_SiA&list=PLpfv1AIjenVMmT7iRx6Nwu6uG6A9gSD0j">
+      Find Popular Recipes
+    </a>
+  </div>
+</section>
+
+<!-- ========== 2) MEALMATE INGREDIENT FINDER ========== -->
+<section class="finder-section section">
+  <div class="finder-container">
+    <h2>Find a Recipe That Works for Both of You</h2>
+    <p>Enter your ingredients, plus your friend’s ingredients, and we’ll suggest a dish!</p>
+
+    <label for="yourIngredients">Your Ingredients (comma-separated):</label>
+    <input type="text" id="yourIngredients" placeholder="e.g. pasta, tomato, cheese" />
+
+    <label for="friendIngredients">Friend’s Ingredients (comma-separated):</label>
+    <input type="text" id="friendIngredients" placeholder="e.g. garlic, bread, onion" />
+
+    <button onclick="findRecipes()">Find Recipes</button>
+
+    <div class="ingredient-finder-results" id="results"></div>
+  </div>
+</section>
+
+<!-- ========== 3) POPULAR RECIPES ========== -->
+<section class="section">
+  <div class="popular-recipes-section">
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/ONWHM-KC2tg?list=PLcApjfOBgcUrqFU3JWDuwEfNXMHyKqELT"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="popular-text">
+      <h1>MealMate: Popular Recipes!</h1>
+      <p>Watch videos from this Playlist for the most popular Italian recipes! 
+         We find recipes that work for both of you — no waste, just taste!
+         Cook together, share the joy, and make every meal a moment!</p>
+      <a class="btn" href="https://mobiri.se">Get started</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4) LATEST RECIPES ========== -->
+<section class="latest-recipes section">
+  <div class="section-head">
+    <h2><b>Latest Recipes</b></h2>
+  </div>
+  <div class="cards-row">
+    <!-- Card 1 -->
+    <div class="card-item">
+      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1534533983688-c7b8e13fd3b6.jpeg" alt="Colorful Harvest Salad">
+      <div class="card-content">
+        <h5><b>Colorful Harvest Salad</b></h5>
+        <p>March 20, 2025</p>
+        <p>A refreshing mix of figs, green beans, tomatoes, peaches, and pistachios with a citrus dressing.</p>
+        <a href="#" class="btn">Try!</a>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="card-item">
+      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1622003275933-fc87f54913ab.jpeg" alt="Hearty Roast & Veggie Medley">
+      <div class="card-content">
+        <h5><b>Hearty Roast & Veggie Medley</b></h5>
+        <p>March 21, 2025</p>
+        <p>Tender roast beef plus roasted baby potatoes, carrots, onions, and garlic—simple yet flavorful!</p>
+        <a href="#" class="btn">Try!</a>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="card-item">
+      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1535914254981-b5012eebbd15.jpeg" alt="Kiwi Greens Power Bowl">
+      <div class="card-content">
+        <h5><b>Kiwi Greens Power Bowl</b></h5>
+        <p>March 22, 2025</p>
+        <p>A vibrant bowl featuring fresh greens, kiwi, and spirulina for an energy-boosting meal.</p>
+        <a href="#" class="btn">Try!</a>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="card-item">
+      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1582138079863-ec3e671f59d7.jpeg" alt="Nutty Tropical Trail Mix">
+      <div class="card-content">
+        <h5><b>Nutty Tropical Trail Mix</b></h5>
+        <p>March 23, 2025</p>
+        <p>A delicious blend of dried mangoes, nuts, seeds, and coconut flakes—perfect for snacking.</p>
+        <a href="#" class="btn">Try!</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5) JOIN US (Form) ========== -->
+<section class="join-us section">
+  <div class="form-container">
+    <h3>Join Us!</h3>
+    <p>We’d love to hear from you. Fill out this form to get in touch.</p>
+    <form>
+      <input type="text" name="name" placeholder="name" />
+      <input type="email" name="email" placeholder="email" />
+      <input type="url" name="phone" placeholder="phone" />
+      <textarea name="message" placeholder="message"></textarea>
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</section>
+
+<!-- ========== 6) CONTACT SECTION ========== -->
+<section class="contact-section section">
+  <div class="contact-container">
+    <h3>Contact</h3>
+    <div class="contact-grid">
+      <!-- Phone -->
+      <div class="contact-item">
+        <h6><b>phone</b></h6>
+        <p><a href="tel:123-456-7890">123-456-7890</a></p>
+      </div>
+      <!-- Email -->
+      <div class="contact-item">
+        <h6><b>email</b></h6>
+        <p><a href="mailto:info@mealmate.com">info@mealmate.com</a></p>
+      </div>
+      <!-- Address -->
+      <div class="contact-item">
+        <h6><b>address</b></h6>
+        <p>123 Food St, QonoS</p>
+      </div>
+      <!-- Working hours -->
+      <div class="contact-item">
+        <h6><b>working hours</b></h6>
+        <p>Mon-Fri: 9am-5pm</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Recipe Finder Script ========== -->
+<script>
+  // Example recipe data
+  const recipeData = [
+    { name: "Classic Tomato Pasta", ingredients: ["pasta", "tomato", "cheese", "garlic", "olive oil"] },
+    { name: "Cheesy Garlic Bread", ingredients: ["bread", "cheese", "garlic", "butter"] },
+    { name: "Vegetable Omelette", ingredients: ["eggs", "onion", "tomato", "cheese", "pepper"] },
+    { name: "Avocado Toast", ingredients: ["bread", "avocado", "tomato", "olive oil"] },
+    { name: "Chicken Salad", ingredients: ["chicken", "lettuce", "tomato", "onion", "dressing"] }
+  ];
+
+  function findRecipes() {
+    const yourIngVal = document.getElementById("yourIngredients").value.trim();
+    const friendIngVal = document.getElementById("friendIngredients").value.trim();
+
+    const yourIngredients = yourIngVal
+      ? yourIngVal.split(",").map(i => i.trim().toLowerCase())
+      : [];
+    const friendIngredients = friendIngVal
+      ? friendIngVal.split(",").map(i => i.trim().toLowerCase())
+      : [];
+
+    // Combine sets
+    const totalIngredients = Array.from(new Set([...yourIngredients, ...friendIngredients]));
+
+    // Filter recipes that can be made from the combined ingredients
+    const possibleRecipes = recipeData.filter(r =>
+      r.ingredients.every(ing => totalIngredients.includes(ing.toLowerCase()))
+    );
+
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (possibleRecipes.length === 0) {
+      resultsDiv.innerHTML = `
+        <h3>No recipes found!</h3>
+        <p>Try adding more ingredients or check your spelling.</p>
+      `;
+    } else {
+      const heading = document.createElement("h3");
+      heading.textContent = `We found ${possibleRecipes.length} recipe(s):`;
+      resultsDiv.appendChild(heading);
+
+      const ul = document.createElement("ul");
+      possibleRecipes.forEach(recipe => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${recipe.name}</strong><br />
+          Ingredients needed: ${recipe.ingredients.join(", ")}
+        `;
+        ul.appendChild(li);
+      });
+      resultsDiv.appendChild(ul);
+    }
+  }
+</script>
+
+</body>
+</html>
