@@ -1,572 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>MealMate Single Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    /* Reset + base typography */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      color: #333;
-    }
-    a {
-      color: #fff;
-      text-decoration: none;
-    }
+<meta charset="UTF-8">
+<title>MealMate Single Page</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#333;}
+section{padding:40px 20px;}
+/* 1) HEADER18 (Top Hero) */
+.header18{position:relative;min-height:70vh;background:url('https://r.mobirisesite.com/1325381/assets/images/ga390147e112f9991a0be85088b33-h_m8lsejjh.jpg')center center/cover no-repeat;display:flex;align-items:flex-end;justify-content:flex-start;color:#fff;}
+.header18 .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1;pointer-events:none;}
+.header18 .container{position:relative;z-index:2;width:100%;}
+.header18 .content-wrap{position:relative;z-index:10;padding:60px 20px;}
+.header18 h1{font-size:3em;margin-bottom:20px;}
+.header18 h2{font-size:2em;margin-bottom:20px;}
+.header18 p{font-size:1.2em;margin-bottom:20px;}
+.header18 .btn{display:inline-block;padding:12px 20px;color:#fff;border:2px solid #fff;text-decoration:none;border-radius:4px;transition:background-color .2s;}
+.header18 .btn:hover{background-color:rgba(255,255,255,.1);}
 
-    /* Utility classes for sections */
-    .section {
-      padding: 30px 20px; /* reduced spacing */
-    }
-    /* Remove extra space between consecutive sections */
-    .section + .section {
-      margin-top: 0;
-    }
+/* 2) HEADER14 (Union Logic) */
+.header14{position:relative;min-height:60vh;display:flex;align-items:center;justify-content:center;background:url('https://r.mobirisesite.com/1325381/assets/images/photo-1625467150295-8eadf10ea64d.jpeg')center center/cover no-repeat;}
+.header14 .mbr-overlay{pointer-events:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.3);z-index:1;}
+.header14 .container{position:relative;z-index:2;width:100%;}
+.header14 .row{display:flex;justify-content:center;}
+.header14 .card{background:#E78F8E;border-radius:6px;padding:20px;margin:10px;max-width:900px;}
+.header14 .card h1{margin-bottom:20px;color:#fff;font-size:1.8em;}
+.header14 input[type="text"]{width:250px;padding:10px;margin:5px;border:1px solid #ccc;border-radius:4px;}
+.header14 button{padding:10px 20px;border:none;border-radius:4px;background:#007bff;color:#fff;cursor:pointer;}
+.header14 button:hover{background:#0056b3;}
+#result h3{margin-bottom:10px;}
+#result p{color:#333;margin-bottom:6px;}
 
-    /* ========== 1) HERO (Background Video) ========== */
-    .hero {
-      position: relative;
-      height: 80vh;
-      min-height: 480px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero-iframe-wrapper {
-      position: absolute;
-      top: 0; 
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      overflow: hidden;
-    }
-    .hero-iframe-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .hero-overlay {
-      position: absolute;
-      top: 0; 
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 2;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 3; /* above overlay */
-      max-width: 700px;
-      margin: 0 20px;
-    }
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 15px;
-    }
-    .hero h2 {
-      font-size: 2em;
-      margin-bottom: 15px;
-    }
-    .hero p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-    .hero .btn {
-      display: inline-block;
-      padding: 12px 20px;
-      background-color: #0fc9a7;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    .hero .btn:hover {
-      background-color: #18e0bd;
-    }
+/* 3) ARTICLE2 (YouTube Embed) */
+.article2{position:relative;min-height:50vh;}
+.article2 .row{display:flex;flex-wrap:wrap;gap:30px;align-items:center;}
+.article2 .left-col{flex:1;min-width:300px;}
+.article2 .right-col{flex:1;min-width:300px;}
+.article2 iframe{width:100%;height:350px;border:0;}
 
-    /* ========== 2) INGREDIENT FINDER ========== */
-    .finder-section {
-      background: #fafafa;
-    }
-    .finder-container {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .finder-container h2 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-    .finder-container p {
-      color: #555;
-      margin-bottom: 20px;
-    }
-    .finder-container label {
-      display: block;
-      text-align: left;
-      margin: 12px 0 6px;
-      font-weight: bold;
-    }
-    .finder-container input[type="text"] {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .finder-container button {
-      background-color: #47c9a2;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .finder-container button:hover {
-      background-color: #5ce2b6;
-    }
-    .ingredient-finder-results {
-      margin-top: 25px;
-    }
-    .ingredient-finder-results h3 {
-      margin-bottom: 10px;
-    }
-    .ingredient-finder-results li {
-      background: #fff;
-      border: 1px solid #ddd;
-      list-style: none;
-      margin: 12px auto;
-      padding: 15px;
-      max-width: 500px;
-      border-radius: 6px;
-      text-align: left;
-    }
+/* 4) features03: LATEST RECIPES */
+.features03{background:#f7f7f7;}
+.features03 .row{display:flex;flex-wrap:wrap;}
+.features03 .row>.item{transition:transform .3s;box-shadow:0 0 3px rgba(0,0,0,.1);border-radius:4px;margin:10px;padding:0;}
+.features03 .row>.item:hover{transform:translateY(-3px);box-shadow:0 6px 10px rgba(0,0,0,.15);}
+.features03 .item-img img{width:100%;display:block;}
+.features03 .item-content{padding:15px;}
+.features03 .item-title{margin:0 0 6px;font-size:1.2em;}
+.features03 .mbr-text{margin-bottom:10px;color:#555;}
+.features03 .mbr-section-btn .btn{background:#47c9a2;color:#fff;padding:8px 12px;border-radius:4px;text-decoration:none;}
+.features03 .mbr-section-btn .btn:hover{background:#5ce2b6;}
 
-    /* ========== 3) POPULAR RECIPES ========== */
-    .popular-recipes-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      align-items: center;
-    }
-    .video-wrap {
-      flex: 1 1 600px;
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-    }
-    .video-wrap iframe {
-      position: absolute;
-      top: 0; 
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .popular-text {
-      flex: 1 1 400px;
-      min-width: 280px;
-    }
-    .popular-text h1 {
-      margin-bottom: 15px;
-      font-size: 2em;
-    }
-    .popular-text p {
-      margin-bottom: 15px;
-      color: #555;
-      line-height: 1.6;
-    }
-    .popular-text .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #47c9a2;
-      color: #fff;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    .popular-text .btn:hover {
-      background-color: #5ce2b6;
-    }
+/* 5) JOIN US section */
+.join-us-container{max-width:800px;margin:0 auto;text-align:center;}
+.join-us-container h3{font-size:2em;margin-bottom:10px;}
+.join-us-container p{color:#555;margin-bottom:20px;}
+.join-us-container form{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.join-us-container input[type="text"],.join-us-container input[type="email"],.join-us-container input[type="url"],.join-us-container textarea{width:100%;max-width:400px;padding:10px;border:1px solid #ccc;border-radius:4px;}
+.join-us-container textarea{min-height:90px;}
+.join-us-container button{padding:10px 20px;background:#47c9a2;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-top:5px;}
+.join-us-container button:hover{background:#5ce2b6;}
 
-    /* ========== 4) LATEST RECIPES ========== */
-    .latest-recipes {
-      background-color: #f7f7f7;
-    }
-    .latest-recipes .section-head {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .cards-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .card-item {
-      flex: 0 1 calc(300px);
-      background: #fff;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 0 4px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    .card-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-    .card-item img {
-      width: 100%;
-      display: block;
-    }
-    .card-content {
-      padding: 15px;
-    }
-    .card-content h5 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 1.2em;
-    }
-    .card-content p {
-      margin-bottom: 10px;
-      color: #555;
-    }
-    .card-content .btn {
-      background-color: #47c9a2;
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background-color 0.2s;
-    }
-    .card-content .btn:hover {
-      background-color: #5ce2b6;
-    }
-
-    /* ========== 5) JOIN US FORM ========== */
-    .join-us {
-      background: #fafafa;
-    }
-    .join-us .form-container {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .join-us .form-container h3 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-    .join-us .form-container p {
-      margin-bottom: 25px;
-      color: #555;
-    }
-    .join-us form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .join-us input[type="text"],
-    .join-us input[type="email"],
-    .join-us input[type="url"],
-    .join-us textarea {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .join-us textarea {
-      min-height: 90px;
-    }
-    .join-us .submit-btn {
-      background-color: #47c9a2;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      margin-top: 5px;
-    }
-    .join-us .submit-btn:hover {
-      background-color: #5ce2b6;
-    }
-
-    /* ========== 6) CONTACT SECTION ========== */
-    .contact-section {
-      background-color: #fff;
-    }
-    .contact-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .contact-container h3 {
-      font-size: 2em;
-      margin-bottom: 25px;
-    }
-    .contact-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .contact-item {
-      flex: 0 1 calc(250px);
-      background-color: #fefefe;
-      border-radius: 6px;
-      box-shadow: 0 0 3px rgba(0,0,0,0.1);
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-    .contact-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-    .contact-item h6 {
-      margin-bottom: 8px;
-      font-size: 1.1em;
-    }
-    .contact-item p {
-      margin-bottom: 0;
-      color: #555;
-    }
-    .contact-item a {
-      color: #333;
-      text-decoration: none;
-    }
-    /* reduce spacing at bottom */
-    .contact-section {
-      padding-bottom: 30px;
-    }
-  </style>
+/* 6) CONTACTS section */
+.contacts01{background:#fff;}
+.contacts01 .contact-container{max-width:1000px;margin:0 auto;text-align:center;}
+.contacts01 .contact-container h3{font-size:2em;margin-bottom:25px;}
+.contacts01 .contact-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.contacts01 .contact-item{flex:0 1 calc(250px);background:#fefefe;border-radius:6px;box-shadow:0 0 3px rgba(0,0,0,.1);padding:20px;transition:.3s;cursor:default;}
+.contacts01 .contact-item:hover{transform:translateY(-3px);box-shadow:0 6px 10px rgba(0,0,0,.15);}
+.contacts01 .contact-item h6{margin-bottom:8px;font-size:1.1em;color:#333;}
+.contacts01 .contact-item p{margin-bottom:0;color:#555;}
+.contacts01 .contact-item a{text-decoration:none;color:#333;transition:.2s;}
+.contacts01 .contact-item a:hover{text-decoration:underline;color:#47c9a2;}
+</style>
 </head>
 <body>
 
-<!-- ========== 1) HERO (Background Video) ========== -->
-<section class="hero">
-  <div class="hero-iframe-wrapper">
-    <iframe
-      src="https://www.youtube.com/embed/Re9pB8A_SiA?list=PLpfv1AIjenVMmT7iRx6Nwu6uG6A9gSD0j&autoplay=1&mute=1&loop=1&playsinline=1&controls=0&showinfo=0&autohide=1&allowfullscreen=true&mode=transparent"
-      frameborder="0"
-      allow="autoplay; fullscreen"
-      allowfullscreen>
-    </iframe>
-  </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1>MealMate</h1>
-    <h2>The Easiest Way to Cook Together &amp; Waste Less</h2>
-    <p>Share recipes, plan meals, and reduce food waste with friends!</p>
-    <a class="btn" href="https://www.youtube.com/watch?v=Re9pB8A_SiA&list=PLpfv1AIjenVMmT7iRx6Nwu6uG6A9gSD0j">
-      Find Popular Recipes
-    </a>
-  </div>
+<!-- 1) HEADER18 SECTION -->
+<section class="header18">
+<div class="overlay"></div>
+<div class="container">
+<div class="row">
+<div class="content-wrap col-12 col-md-12">
+<h1><b>MealMate</b></h1>
+<h2>Your Guide to Savoury Meals!</h2>
+<p>Discover Recipes, Cook Together, Waste Less!</p>
+<a class="btn" href="https://www.youtube.com/watch?v=Re9pB8A_SiA&list=PLpfv1AIjenVMmT7iRx6Nwu6uG6A9gSD0j">Find Popular Recipes</a>
+</div>
+</div>
+</div>
 </section>
 
-<!-- ========== 2) MEALMATE INGREDIENT FINDER ========== -->
-<section class="finder-section section">
-  <div class="finder-container">
-    <h2>Find a Recipe That Works for Both of You</h2>
-    <p>Enter your ingredients, plus your friend’s ingredients, and we’ll suggest a dish!</p>
-
-    <label for="yourIngredients">Your Ingredients (comma-separated):</label>
-    <input type="text" id="yourIngredients" placeholder="e.g. pasta, tomato, cheese" />
-
-    <label for="friendIngredients">Friend’s Ingredients (comma-separated):</label>
-    <input type="text" id="friendIngredients" placeholder="e.g. garlic, bread, onion" />
-
-    <button onclick="findRecipes()">Find Recipes</button>
-
-    <div class="ingredient-finder-results" id="results"></div>
-  </div>
+<!-- 2) HEADER14 SECTION (Union Logic) -->
+<section data-bs-version="5.1" class="header14" group="Headers">
+<div class="mbr-overlay" style="pointer-events:none;background:rgba(255,255,255,.3);position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;"></div>
+<div class="container" style="position:relative;z-index:2;">
+<div class="row" style="display:flex;justify-content:center;">
+<div class="card col-12 col-md-12 col-lg-8" style="background:#E78F8E;border-radius:6px;padding:20px;margin:10px;max-width:900px;">
+<div class="card-wrapper">
+<div class="card-box align-center">
+<h1 style="margin-bottom:20px;color:#fff;font-size:1.8em;"><b>Enter Your Ingredients and Start Cooking!</b></h1>
+<div style="margin-bottom:1rem;">
+<input type="text" id="user1" placeholder="Your Ingredients (comma-separated)" style="width:250px;padding:10px;margin:5px;border:1px solid #ccc;border-radius:4px;">
+<input type="text" id="user2" placeholder="Friend's Ingredients (comma-separated)" style="width:250px;padding:10px;margin:5px;border:1px solid #ccc;border-radius:4px;">
+</div>
+<button onclick="findCommonRecipes()" style="padding:10px 20px;border:none;border-radius:4px;background:#007bff;color:#fff;cursor:pointer;">Find Recipe</button>
+<div id="result" style="margin-top:1rem;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- ========== 3) POPULAR RECIPES ========== -->
-<section class="section">
-  <div class="popular-recipes-section">
-    <div class="video-wrap">
-      <iframe
-        src="https://www.youtube.com/embed/ONWHM-KC2tg?list=PLcApjfOBgcUrqFU3JWDuwEfNXMHyKqELT"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="popular-text">
-      <h1>MealMate: Popular Recipes!</h1>
-      <p>Watch videos from this Playlist for the most popular Italian recipes! 
-         We find recipes that work for both of you — no waste, just taste!
-         Cook together, share the joy, and make every meal a moment!</p>
-      <a class="btn" href="https://mobiri.se">Get started</a>
-    </div>
-  </div>
-</section>
-
-<!-- ========== 4) LATEST RECIPES ========== -->
-<section class="latest-recipes section">
-  <div class="section-head">
-    <h2><b>Latest Recipes</b></h2>
-  </div>
-  <div class="cards-row">
-    <!-- Card 1 -->
-    <div class="card-item">
-      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1534533983688-c7b8e13fd3b6.jpeg" alt="Colorful Harvest Salad">
-      <div class="card-content">
-        <h5><b>Colorful Harvest Salad</b></h5>
-        <p>March 20, 2025</p>
-        <p>A refreshing mix of figs, green beans, tomatoes, peaches, and pistachios with a citrus dressing.</p>
-        <a href="#" class="btn">Try!</a>
-      </div>
-    </div>
-    <!-- Card 2 -->
-    <div class="card-item">
-      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1622003275933-fc87f54913ab.jpeg" alt="Hearty Roast & Veggie Medley">
-      <div class="card-content">
-        <h5><b>Hearty Roast & Veggie Medley</b></h5>
-        <p>March 21, 2025</p>
-        <p>Tender roast beef plus roasted baby potatoes, carrots, onions, and garlic—simple yet flavorful!</p>
-        <a href="#" class="btn">Try!</a>
-      </div>
-    </div>
-    <!-- Card 3 -->
-    <div class="card-item">
-      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1535914254981-b5012eebbd15.jpeg" alt="Kiwi Greens Power Bowl">
-      <div class="card-content">
-        <h5><b>Kiwi Greens Power Bowl</b></h5>
-        <p>March 22, 2025</p>
-        <p>A vibrant bowl featuring fresh greens, kiwi, and spirulina for an energy-boosting meal.</p>
-        <a href="#" class="btn">Try!</a>
-      </div>
-    </div>
-    <!-- Card 4 -->
-    <div class="card-item">
-      <img src="https://r.mobirisesite.com/1325381/assets/images/photo-1582138079863-ec3e671f59d7.jpeg" alt="Nutty Tropical Trail Mix">
-      <div class="card-content">
-        <h5><b>Nutty Tropical Trail Mix</b></h5>
-        <p>March 23, 2025</p>
-        <p>A delicious blend of dried mangoes, nuts, seeds, and coconut flakes—perfect for snacking.</p>
-        <a href="#" class="btn">Try!</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== 5) JOIN US (Form) ========== -->
-<section class="join-us section">
-  <div class="form-container">
-    <h3>Join Us!</h3>
-    <p>We’d love to hear from you. Fill out this form to get in touch.</p>
-    <form>
-      <input type="text" name="name" placeholder="name" />
-      <input type="email" name="email" placeholder="email" />
-      <input type="url" name="phone" placeholder="phone" />
-      <textarea name="message" placeholder="message"></textarea>
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
-  </div>
-</section>
-
-<!-- ========== 6) CONTACT SECTION ========== -->
-<section class="contact-section section">
-  <div class="contact-container">
-    <h3>Contact</h3>
-    <div class="contact-grid">
-      <!-- Phone -->
-      <div class="contact-item">
-        <h6><b>phone</b></h6>
-        <p><a href="tel:123-456-7890">123-456-7890</a></p>
-      </div>
-      <!-- Email -->
-      <div class="contact-item">
-        <h6><b>email</b></h6>
-        <p><a href="mailto:info@mealmate.com">info@mealmate.com</a></p>
-      </div>
-      <!-- Address -->
-      <div class="contact-item">
-        <h6><b>address</b></h6>
-        <p>123 Food St, QonoS</p>
-      </div>
-      <!-- Working hours -->
-      <div class="contact-item">
-        <h6><b>working hours</b></h6>
-        <p>Mon-Fri: 9am-5pm</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== Recipe Finder Script ========== -->
 <script>
-  // Example recipe data
-  const recipeData = [
-    { name: "Classic Tomato Pasta", ingredients: ["pasta", "tomato", "cheese", "garlic", "olive oil"] },
-    { name: "Cheesy Garlic Bread", ingredients: ["bread", "cheese", "garlic", "butter"] },
-    { name: "Vegetable Omelette", ingredients: ["eggs", "onion", "tomato", "cheese", "pepper"] },
-    { name: "Avocado Toast", ingredients: ["bread", "avocado", "tomato", "olive oil"] },
-    { name: "Chicken Salad", ingredients: ["chicken", "lettuce", "tomato", "onion", "dressing"] }
-  ];
-
-  function findRecipes() {
-    const yourIngVal = document.getElementById("yourIngredients").value.trim();
-    const friendIngVal = document.getElementById("friendIngredients").value.trim();
-
-    const yourIngredients = yourIngVal
-      ? yourIngVal.split(",").map(i => i.trim().toLowerCase())
-      : [];
-    const friendIngredients = friendIngVal
-      ? friendIngVal.split(",").map(i => i.trim().toLowerCase())
-      : [];
-
-    // Combine sets
-    const totalIngredients = Array.from(new Set([...yourIngredients, ...friendIngredients]));
-
-    // Filter recipes that can be made from the combined ingredients
-    const possibleRecipes = recipeData.filter(r =>
-      r.ingredients.every(ing => totalIngredients.includes(ing.toLowerCase()))
-    );
-
-    const resultsDiv = document.getElementById("results");
-    resultsDiv.innerHTML = "";
-
-    if (possibleRecipes.length === 0) {
-      resultsDiv.innerHTML = `
-        <h3>No recipes found!</h3>
-        <p>Try adding more ingredients or check your spelling.</p>
-      `;
-    } else {
-      const heading = document.createElement("h3");
-      heading.textContent = `We found ${possibleRecipes.length} recipe(s):`;
-      resultsDiv.appendChild(heading);
-
-      const ul = document.createElement("ul");
-      possibleRecipes.forEach(recipe => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>${recipe.name}</strong><br />
-          Ingredients needed: ${recipe.ingredients.join(", ")}
-        `;
-        ul.appendChild(li);
-      });
-      resultsDiv.appendChild(ul);
-    }
-  }
+/* Union-based recipe logic for header14 */
+const recipes=[
+{name:"Tomato Pasta",ingredients:["tomato","pasta","garlic","basil"]},
+{name:"Avocado Salad",ingredients:["avocado","lettuce","lemon","salt"]},
+{name:"Veggie Stir Fry",ingredients:["carrot","broccoli","soy sauce","garlic"]},
+{name:"Guacamole",ingredients:["avocado","tomato","onion","lime"]}
+];
+function findCommonRecipes(){
+const user1Ingredients=document.getElementById("user1").value.toLowerCase().split(",");
+const user2Ingredients=document.getElementById("user2").value.toLowerCase().split(",");
+const user1Clean=user1Ingredients.map(i=>i.trim());
+const user2Clean=user2Ingredients.map(i=>i.trim());
+const unionSet=new Set([...user1Clean,...user2Clean]);
+let resultHTML="<h3>Suggested Recipes:</h3>",found=false;
+recipes.forEach(r=>{
+let match=r.ingredients.every(ing=>unionSet.has(ing));
+if(match){resultHTML+=`<p>✅ ${r.name}</p>`;found=true;}
+});
+if(!found){
+resultHTML+="<p>No perfect match found! Try adding more shared ingredients or see partial matches below:</p>";
+recipes.forEach(r=>{
+const partialCount=r.ingredients.filter(ing=>unionSet.has(ing)).length;
+if(partialCount>0){resultHTML+=`<p>• ${r.name} (matched ${partialCount} ingredient${partialCount>1?'s':''})</p>`;}
+});
+}
+document.getElementById("result").innerHTML=resultHTML;
+}
 </script>
 
+<!-- 3) ARTICLE2 SECTION (YouTube Embed) -->
+<section data-bs-version="5.1" class="article2" group="Article">
+<div class="row" style="display:flex;flex-wrap:wrap;align-items:center;gap:30px;">
+<!-- Left: IFRAME -->
+<div class="left-col">
+<iframe src="https://www.youtube.com/embed/ONWHM-KC2tg?list=PLcApjfOBgcUrqFU3JWDuwEfNXMHyKqELT" allowfullscreen></iframe>
+</div>
+<!-- Right: Text -->
+<div class="right-col">
+<h1 style="font-size:2em;margin-bottom:10px;"><b>MealMate: Popular Recipes!</b></h1>
+<p style="margin-bottom:10px;line-height:1.6;">
+Watch videos from this Playlist for the most popular Italian recipes!<br><br>
+We find recipes that work for both of you — no waste, just taste!<br><br>
+Cook together, share the joy, and make every meal a moment!
+</p>
+</div>
+</div>
+</section>
+
+<!-- 4) LATEST RECIPES (features03) -->
+<section data-bs-version="5.1" class="features03" group="Features">
+<div class="mbr-overlay"></div>
+<div>
+<div class="row justify-content-center mb-5">
+<div class="col-12 content-head">
+<div class="mbr-section-head">
+<h4 class="mbr-section-title mbr-fonts-style align-center mb-0"><b>Latest Recipes</b></h4>
+<h5 class="mbr-section-subtitle mbr-fonts-style align-center mt-4 mb-0">To add more cards, hover on a card and click 'Add items'</h5>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="item features-image col-12 col-md-6 col-lg-{{cardsWidth}} active">
+<div class="item-wrapper">
+<div class="item-img mb-3">
+<img src="https://r.mobirisesite.com/1325381/assets/images/photo-1534533983688-c7b8e13fd3b6.jpeg">
+</div>
+<div class="item-content align-left">
+<h5 class="item-title mbr-fonts-style mt-0 mb-2"><b>Colorful Harvest Salad</b></h5>
+<p class="mbr-text mbr-fonts-style mb-3">March 20, 2025</p>
+<p class="mbr-text mbr-fonts-style mb-3">A refreshing mix of figs, green beans, tomatoes, peaches, and pistachios tossed with a citrus dressing. Perfect for a light lunch or dinner with friends!</p>
+<div class="mbr-section-btn item-footer"><a href class="btn item-btn btn-primary">Try!</a></div>
+</div>
+</div>
+</div>
+<div class="item features-image col-12 col-md-6 col-lg-{{cardsWidth}}">
+<div class="item-wrapper">
+<div class="item-img mb-3">
+<img src="https://r.mobirisesite.com/1325381/assets/images/photo-1622003275933-fc87f54913ab.jpeg">
+</div>
+<div class="item-content align-left">
+<h5 class="item-title mbr-fonts-style mb-2 mt-0"><b>Hearty Roast &amp; Veggie Medley</b></h5>
+<p class="mbr-text mbr-fonts-style mb-3">March 21, 2025</p>
+<p class="mbr-text mbr-fonts-style mb-3">Tender roast beef paired with roasted baby potatoes, carrots, onions, and garlic. A classic, hearty meal that’s simple yet flavorful!</p>
+<div class="mbr-section-btn item-footer"><a href class="btn item-btn btn-primary">Try!</a></div>
+</div>
+</div>
+</div>
+<div class="item features-image col-12 col-md-6 col-lg-{{cardsWidth}}">
+<div class="item-wrapper">
+<div class="item-img mb-3">
+<img src="https://r.mobirisesite.com/1325381/assets/images/photo-1535914254981-b5012eebbd15.jpeg">
+</div>
+<div class="item-content align-left">
+<h5 class="item-title mbr-fonts-style mb-2 mt-0"><b>Kiwi Greens Power Bowl</b></h5>
+<p class="mbr-text mbr-fonts-style mb-3">March 22, 2025</p>
+<p class="mbr-text mbr-fonts-style mb-3">A vibrant bowl of fresh greens, kiwi, and spirulina. Packed with nutrients, this power bowl is perfect for a healthy, energy-boosting meal!</p>
+<div class="mbr-section-btn item-footer"><a href class="btn item-btn btn-primary">Try!</a></div>
+</div>
+</div>
+</div>
+<div class="item features-image col-12 col-md-6 col-lg-{{cardsWidth}}">
+<div class="item-wrapper">
+<div class="item-img mb-3">
+<img src="https://r.mobirisesite.com/1325381/assets/images/photo-1582138079863-ec3e671f59d7.jpeg">
+</div>
+<div class="item-content align-left">
+<h5 class="item-title mbr-fonts-style mb-2 mt-0"><b>Nutty Tropical Trail Mix</b></h5>
+<p class="mbr-text mbr-fonts-style mb-3">March 23, 2025</p>
+<p class="mbr-text mbr-fonts-style mb-3">A delicious blend of dried mangoes, nuts, seeds, and coconut flakes. Perfect as a healthy snack or breakfast topper!</p>
+<div class="mbr-section-btn item-footer"><a href class="btn item-btn btn-primary">Try!</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 5) JOIN US SECTION -->
+<section class="join-us-container">
+<h3>Join Us!</h3>
+<p>We’d love to hear from you. Fill out this form to get in touch.</p>
+<form>
+<input type="text" name="name" placeholder="name">
+<input type="email" name="email" placeholder="email">
+<input type="url" name="phone" placeholder="phone">
+<textarea name="message" placeholder="message"></textarea>
+<button type="submit">Submit</button>
+</form>
+</section>
+
+<!-- 6) CONTACTS SECTION -->
+<section class="contacts01">
+<div class="contact-container">
+<h3>Contact</h3>
+<div class="contact-grid">
+<div class="contact-item">
+<h6><b>phone</b></h6>
+<p><a href="tel:123-456-7890">123-456-7890</a></p>
+</div>
+<div class="contact-item">
+<h6><b>email</b></h6>
+<p><a href="mailto:info@mealmate.com">info@mealmate.com</a></p>
+</div>
+<div class="contact-item">
+<h6><b>address</b></h6>
+<p>123 Food St, QonoS</p>
+</div>
+<div class="contact-item">
+<h6><b>working hours</b></h6>
+<p>Mon-Fri: 9am-5pm</p>
+</div>
+</div>
+</div>
+</section>
 </body>
 </html>
